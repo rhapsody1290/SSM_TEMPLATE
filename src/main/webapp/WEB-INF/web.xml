@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+
+    <!-- Web容器加载顺序ServletContext—>context_param—>listener—>filter—>servlet -->
+
+    <!--加载Spring配置文件，ContextLoader的initWebApplicationContext，
+        configureAndRefreshWebApplicationContext中读取-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext*.xml</param-value>
+    </context-param>
+
+    <!-- 防止发生java.beans.Introspector内存泄露,应将它配置在ContextLoaderListener的前面
+        详细描述见http://blog.csdn.net/jadyer/article/details/11991457 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!--Spring的 ApplicationContext 载入, 应用启动时,该监听器被执行,它会读取Spring相关配置文件-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- 编码过滤器，UTF8编码，对POST有效
+        forceEncoding默认为false,此时效果可大致理解为request.setCharacterEncoding("UTF-8")
+        forceEncoding=true后,可大致理解为request.setCharacterEncoding("UTF-8")和response.setCharacterEncoding("UTF-8")-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--1、Shiro过滤器,通常会将此filter-mapping放置到最前面(即其他filter-mapping前面),以保证它是过滤器链中第一个起作用的
+        2、DelegatingFilterProxy的作用是自动到 spring 容器查找名字为 shiroFilter（filter-name）的 bean,并作为成员变量，
+        并把所有 Filter 的操作委托给它
+        3、在Spring中配置ShiroFilter,这里filter-name必须对应applicationContext.xml中定义的<bean id="shiroFilter"class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"
+         -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <!--targetFilterLifecycle ,其默认值为false.但如果被其代理的filter的init()方法和destry()方法需要被调用时，
+                需要设置targetFilterLifecycle为true-->
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <!--使用[/*]匹配所有请求,保证所有的可控请求都经过Shiro的过滤-->
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--配置Spring MVC核心分发器-->
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <!--/表示所有的请求都会进入DispatcherServlet，不会拦截jsp，/*会拦截jsp-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- Session超时30分钟(零或负数表示会话永不超时) -->
+    <!--
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+     -->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>405</error-code>
+        <location>/WEB-INF/error/405.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/error/500.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>org.apache.shiro.session.InvalidSessionException</exception-type>
+        <location>/WEB-INF/error/invalidSession.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/error/500.jsp</location>
+    </error-page>
+</web-app>
