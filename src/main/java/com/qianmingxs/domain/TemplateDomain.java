@@ -20,7 +20,7 @@ public class TemplateDomain implements Serializable{
     private String userName;
     // 密码
     @JsonIgnore
-    private String PASS_WORD;
+    private String password;
     // 姓名
     private String name;
     // 年龄
@@ -35,67 +35,12 @@ public class TemplateDomain implements Serializable{
     // 更新时间
     private Date updated;
 
-    @Override
-    public String toString() {
-        return "TemplateDomain{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", PASS_WORD='" + PASS_WORD + '\'' +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", sex=" + sex +
-                ", birthday=" + birthday +
-                ", created=" + created +
-                ", updated=" + updated +
-                '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPASS_WORD() {
-        return PASS_WORD;
-    }
-
-    public void setPASS_WORD(String PASS_WORD) {
-        this.PASS_WORD = PASS_WORD;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getAge() {
         return age;
     }
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
     }
 
     public Date getBirthday() {
@@ -114,11 +59,66 @@ public class TemplateDomain implements Serializable{
         this.created = created;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
     public Date getUpdated() {
         return updated;
     }
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return "TemplateDomain{" +
+                "age=" + age +
+                ", id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
     }
 }

@@ -1,8 +1,7 @@
 package com.qianmingxs.mapper;
 
 import com.qianmingxs.domain.TemplateDomain;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +24,15 @@ public interface TemplateMapper {
     @Select("select * from tb_user where id = #{id}")
     public TemplateDomain selectUserDomainById(long id);
 
-    @Insert("insert into tb_user(name) values(#{domain.name})")
+    @Insert("insert into tb_user(user_name,name) values(#{userName},#{name})")
     public void insertDomain(TemplateDomain domain);
+
+    @Delete("delete from tb_user where id = #{id}")
+    public void deleteDomain(long id);
+
+    @Update("update tb_user set password = #{password} where id = #{id}")
+    public void updateDomain(@Param(value = "id") long id,
+                             @Param(value = "password") String password);
 
     /**
      * 关联查询

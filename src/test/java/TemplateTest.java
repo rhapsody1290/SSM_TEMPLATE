@@ -66,7 +66,20 @@ public class TemplateTest {
 
     @Test
     public void testInsertDomain(){
+        TemplateDomain domain = new TemplateDomain();
+        domain.setUserName("username");
+        domain.setName("xxx");
+        mapper.insertDomain(domain);
+    }
 
+    @Test
+    public void testDeleteDomain(){
+        mapper.deleteDomain(65);
+    }
+
+    @Test
+    public void testUpdateDomain(){
+        mapper.updateDomain(63,"654321");
     }
     /*
     @Test
