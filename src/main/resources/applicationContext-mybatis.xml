@@ -12,23 +12,69 @@
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
+    <!-- 引入配置文件，配置文件需要改动 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置连接池 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${driver}"></property>
+        <property name="jdbcUrl" value="${url}"></property>
+        <property name="user" value="${username}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+
     <!--spring和mybatis整合-->
     <!--配置sqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--引入数据源-->
         <property name="dataSource" ref="dataSource" />
-        <!--引入mybatis的全局配置-->
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--引入mybatis的全局配置，<settings> 或<typeAliases>的部分-->
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <!--开启驼峰的自动映射，完成数据库经典命名规则到java属性的经典命名规则的映射-->
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+            </bean>
+        </property>
         <!--★★★mybatis别名包-->
-        <property name="typeAliasesPackage" value="cn.apeius.usermanage.domain"/>
+        <property name="typeAliasesPackage" value="com.qianmingxs.domain"/>
         <!--mapper.xml所在路径,可以使mapper接口与mapper.xml分离；可以使用通配符，**表示所有目录-->
         <property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
+        <!--插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect = mysql
+                            reasonable = true
+                            rowBoundsWithCount = true
+                        </value>
+                    </property>
+                </bean>
+                <bean class="com.github.abel533.mapperhelper.MapperInterceptor">
+                    <property name="properties">
+                        <value>
+                            mappers=com.github.abel533.mapper.Mapper
+                            IDENTITY=MYSQL
+                            notEmpty=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!--指定扫描包，mapper接口所在的包，更改工程名-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--★★★多个扫描包可以通过逗号或分号进行分割-->
-        <property name="basePackage" value="cn.apeius.usermanage.mapper" />
+        <property name="basePackage" value="com.qianmingxs.mapper" />
     </bean>
 
 </beans>

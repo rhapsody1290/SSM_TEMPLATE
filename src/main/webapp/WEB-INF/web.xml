@@ -44,27 +44,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--1、Shiro过滤器,通常会将此filter-mapping放置到最前面(即其他filter-mapping前面),以保证它是过滤器链中第一个起作用的
-        2、DelegatingFilterProxy的作用是自动到 spring 容器查找名字为 shiroFilter（filter-name）的 bean,并作为成员变量，
-        并把所有 Filter 的操作委托给它
-        3、在Spring中配置ShiroFilter,这里filter-name必须对应applicationContext.xml中定义的<bean id="shiroFilter"class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"
-         -->
-    <filter>
-        <filter-name>shiroFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <init-param>
-            <!--targetFilterLifecycle ,其默认值为false.但如果被其代理的filter的init()方法和destry()方法需要被调用时，
-                需要设置targetFilterLifecycle为true-->
-            <param-name>targetFilterLifecycle</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <!--使用[/*]匹配所有请求,保证所有的可控请求都经过Shiro的过滤-->
-        <filter-name>shiroFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
     <!--配置Spring MVC核心分发器-->
     <servlet>
         <servlet-name>springmvc</servlet-name>
@@ -88,24 +67,4 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <error-page>
-        <error-code>405</error-code>
-        <location>/WEB-INF/error/405.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/error/404.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/WEB-INF/error/500.jsp</location>
-    </error-page>
-    <error-page>
-        <exception-type>org.apache.shiro.session.InvalidSessionException</exception-type>
-        <location>/WEB-INF/error/invalidSession.jsp</location>
-    </error-page>
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/WEB-INF/error/500.jsp</location>
-    </error-page>
 </web-app>

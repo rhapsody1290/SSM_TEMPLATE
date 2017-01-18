@@ -1,2 +1,1 @@
-# SSM
 # SSM_TEMPLATE

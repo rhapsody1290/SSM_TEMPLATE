@@ -45,24 +45,5 @@
            statistics="true">
     </cache>
 
-    <!--shiro授权的缓存-->
-    <cache name="shiro-authorizationCache"
-           maxEntriesLocalHeap="2000"
-           eternal="false"
-           timeToIdleSeconds="600"
-           timeToLiveSeconds="600"
-           overflowToDisk="false"
-           statistics="true">
-    </cache>
-
-    <!--Shiro Session的缓存-->
-    <cache name="shiro-activeSessionCache"
-           maxEntriesLocalHeap="10000"
-           overflowToDisk="true"
-           eternal="false"
-           diskPersistent="false"
-           timeToLiveSeconds="0"
-           timeToIdleSeconds="0"
-           statistics="true"/>
 
 </ehcache>

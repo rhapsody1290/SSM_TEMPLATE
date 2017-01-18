@@ -11,10 +11,6 @@
     <title>$Title$</title>
 </head>
 <body>
-    <%--首页——默认访问跳转页面--%>
-    <%--<jsp page="/public/login.html"/>--%>
-    <%
-        response.sendRedirect("/ssm/public/login.html");
-    %>
+
 </body>
 </html>
