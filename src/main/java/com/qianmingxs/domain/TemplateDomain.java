@@ -11,6 +11,7 @@ import java.util.Date;
  * 3、@Id 标注主键
  * 4、domain类属性建议使用驼峰形式，这样数据库大小不一致和有下划线都能匹配；如不符合可以使用@Column指定 @Column(name="user_name")
  * 5、如果domain属性使用下划线，即使和数据库名字一致，也不能能自动匹配，需要通过resultMap或者select..as 方式进行手动匹配
+ * 6、不是表中字段的属性必须加 @Transient 注解
  */
 @Table(name = "tb_user")
 public class TemplateDomain implements Serializable {

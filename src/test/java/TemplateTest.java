@@ -1,4 +1,6 @@
 import com.github.abel533.entity.Example;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qianmingxs.domain.TemplateDomain;
 import com.qianmingxs.mapper.TemplateMapper;
 import org.junit.After;
@@ -195,5 +197,28 @@ public class TemplateTest {
         for(TemplateDomain u : TemplateDomains){
             System.out.println(u);
         }
+    }
+
+    /**
+     * 分页
+     */
+    @Test
+    public void pageInfoTest(){
+        //开启分页，第一个参数：当前的页数；第二个参数：每页几条数据
+        PageHelper.startPage(2,5);
+        //紧接着的第一个查询会被执行分页
+        List<TemplateDomain> users = mapper.select(null);
+        for(TemplateDomain u : users){
+            System.out.println(u);
+        }
+
+        //获取分页信息
+        PageInfo<TemplateDomain> pageInfo = new PageInfo<TemplateDomain>(users);
+        pageInfo.getList();//与users为同一个引用
+        System.out.println("总记录数：" + pageInfo.getTotal());
+        System.out.println("总页数 " + pageInfo.getPages());
+        System.out.println("当前页数 " + pageInfo.getPageNum());
+        System.out.println("每页多少数据 " + pageInfo.getPageSize());
+        System.out.println("当前页的数据条目数 " + pageInfo.getSize());
     }
 }
