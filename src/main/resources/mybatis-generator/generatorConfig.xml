@@ -17,6 +17,8 @@
 
     <context id="MySQLTables" targetRuntime="MyBatis3">
 
+        <property name="javaFileEncoding" value="UTF-8"/>
+
         <!-- 为生成的Java模型创建一个toString方法 -->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
         <!-- 这个插件主要用来为生成的Java模型类添加序列化接口，并生成serialVersionUID字段； -->
@@ -37,18 +39,20 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
+<!-- 对单表的基本操作使用通用mapper，所以只需要生成domain对象即可-->
+
         <!--生成xml mapper文件 路径 -->
-        <sqlMapGenerator targetPackage="${xml.mapper.package}" targetProject="${xml.target.project}">
-            <property name="enableSubPackages" value="false"/>
-        </sqlMapGenerator>
+        <!--<sqlMapGenerator targetPackage="${xml.mapper.package}" targetProject="${xml.target.project}">-->
+            <!--<property name="enableSubPackages" value="false"/>-->
+        <!--</sqlMapGenerator>-->
 
         <!-- 生成的Dao接口 的包路径 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="${dao.package}" targetProject="${target.project}">
-            <property name="enableSubPackages" value="false"/>
-        </javaClientGenerator>
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="${dao.package}" targetProject="${target.project}">-->
+            <!--<property name="enableSubPackages" value="false"/>-->
+        <!--</javaClientGenerator>-->
 
         <!--对应数据库表名 -->
-        <table tableName="tb_user" domainObjectName="User"
+        <table tableName="tb_user" domainObjectName="TemplateDomain"
             enableCountByExample="false"  enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">

@@ -7,8 +7,5 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
     public static void main(String[] args){
         ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml","applicationContext-mybatis.xml"});
-        UserMapper bean = context.getBean(UserMapper.class);
-
-        bean.deleteByPrimaryKey(51L);
     }
 }
