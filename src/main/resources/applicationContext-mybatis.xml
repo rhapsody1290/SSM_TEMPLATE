@@ -16,7 +16,7 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:jdbc.properties</value>
+                <value>classpath:config.properties</value>
             </list>
         </property>
     </bean>
@@ -62,21 +62,23 @@
                         </value>
                     </property>
                 </bean>
-                <bean class="com.github.abel533.mapperhelper.MapperInterceptor">
-                    <property name="properties">
-                        <value>
-                            mappers=com.github.abel533.mapper.Mapper
-                            IDENTITY=MYSQL
-                            notEmpty=true
-                        </value>
-                    </property>
-                </bean>
+                <!--<bean class="com.github.abel533.mapperhelper.MapperInterceptor">-->
+                    <!--<property name="properties">-->
+                        <!--<value>-->
+                            <!--mappers=com.github.abel533.mapper.Mapper-->
+                            <!--IDENTITY=MYSQL-->
+                            <!--notEmpty=true-->
+                        <!--</value>-->
+                    <!--</property>-->
+                <!--</bean>-->
             </array>
         </property>
     </bean>
 
-    <!--指定扫描包，mapper接口所在的包，更改工程名-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!--指定扫描包，mapper接口所在的包，更改工程名
+    注意：这里为了使用通用mapper替换了官方类。MyBatis的唯一区别就是org.改成了tk.方便修改和记忆。
+    -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--★★★多个扫描包可以通过逗号或分号进行分割-->
         <property name="basePackage" value="com.qianmingxs.mapper" />
     </bean>

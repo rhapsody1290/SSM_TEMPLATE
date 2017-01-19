@@ -1,8 +1,8 @@
 package com.qianmingxs.mapper;
 
-import com.github.abel533.mapper.Mapper;
 import com.qianmingxs.domain.TemplateDomain;
 import org.apache.ibatis.annotations.*;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by mingqian on 2017/1/18.
  */
-public interface TemplateMapper extends Mapper<TemplateDomain>{
+public interface TemplateMapper extends Mapper<TemplateDomain> {
 
     /**
      * 关联查询
