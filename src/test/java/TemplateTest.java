@@ -81,6 +81,7 @@ public class TemplateTest {
     public void testUpdateDomain(){
         mapper.updateDomain(63,"654321");
     }
+
     /*
     @Test
     public void testSelectOne() throws Exception {
@@ -94,8 +95,8 @@ public class TemplateTest {
     @Test
     public void testSelect() throws Exception {
         TemplateDomain record = new TemplateDomain();
-        //可以设置属性增加约束，如果没有约束可以直接传入null
-        record.setPassword("000000");
+        //可以设置属性增加约束，如果没有约束可null
+        record.setPassword("000000");以直接传入
 
         List<TemplateDomain> TemplateDomains = mapper.select(record);
         for(TemplateDomain TemplateDomain : TemplateDomains)
